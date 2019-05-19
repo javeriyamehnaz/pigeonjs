@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="pigeon-chart" data-ng-cloak>
+<head>
+    <title>Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        form div {
+            margin-bottom: 15px;
+        }
+        form div label span {
+            display:  inline-block;
+            width: 150px;
+			vertical-align: top;
+        }
+        form div p {
+            display: inline-block;
+            margin-left: 20px;
+            color: #777;
+            font-style: italic;
+            font-size: 14px;
+			vertical-align: top;
+        }
+		form textarea {
+			width: 38%;
+			height: 50px;
+		}
+		form select {
+			width: 205px;
+			height: 26px;
+		}
+		form input {
+			width: 200px;
+			height: 18px;
+		}
+    </style>
+</head>  
+<body ng-controller="MainCtrl">
+    
+    <div id="axis">
+	</div>
+    <div>
+	<h2>Pigeon Chart Generator</h2>
+        <form>
+            <!-- query example: SELECT title, COUNT(title) FROM `titles` GROUP BY title -->
+            <div>
+                <label><span>SQL Query:</span> <textarea ng-model="query"></textarea></label>
+                <p>Example: SELECT title, COUNT(title) FROM `titles` GROUP BY title</p>
+            </div>
+            <div>
+                <label>
+					<span>Chart type:</span> 
+					<select ng-model="type" ng-init="type='bar'">
+						<option value="bar">bar</option>
+                        <option value="pie">pie</option>
+                        <option value="column">column</option>
+                        <option value="line">line</option>
+                        <option value="area">area</option>
+					</select>
+				</label>
+            </div>
+            <div>
+                <label><span>Title:</span> <input type="text" ng-model="title" /></label>
+            </div>
+            <div>
+                <label><span>Sub Title:</span> <input type="text" ng-model="subtitle" /></label>
+            </div>
+            <div>
+                <label><span>X Axis Title:</span> <input type="text" ng-model="axisyTitle" /></label>
+            </div>
+            <div ng-if="type !== 'pie'">
+                <label><span>Y Axis Title:</span> <input type="text" ng-model="axisxTitle" /></label>
+            </div>
+			<div>
+                <label>
+					<span>Show Data Label:</span> 
+					<select ng-model="showDataLabel" ng-init="showDataLabel=false">
+						<option ng-value="true">true</option>
+						<option ng-value="false">false</option>
+					</select>
+				</label>
+            </div>
+            <div>
+				<label>
+					<span>Show Legend:</span> 
+					<select ng-model="showLegend" ng-init="showLegend = 'right'">						
+						<option value="false">false</option>
+						<option value="right">right</option>
+						<option value="left">left</option>
+						<option value="top">top</option>
+						<option value="bottom">bottom</option>
+					</select>
+				</label>
+            </div>            
+            <div>
+                <label><span></span><button ng-click="callInit()">Submit</button></label>
+            </div>            
+        </form>
+
+		<!--View data in chart form-->
+		<pigeon-chart query="query"
+			  title="title"
+			  subtitle="subtitle"
+			  type="type"
+              axisy-title="axisyTitle"
+              axisx-title="axisxTitle"
+			  show-legend="showLegend"
+			  show-data-label="true">Placeholder for generic chart</pigeon-chart>
+
+    <script src='pigeon-chart/js/angular.min.1.6.4.js'></script>
+	<script src='pigeon-chart/js/underscore-min.js'></script>
+	<script src='pigeon-chart/js/highcharts.js'></script>
+	<script src='pigeon-chart/js/exporting.js'></script>
+	<script src='pigeon-chart/js/series-label.js'></script>
+	<script src='pigeon-chart/js/grouped-categories.js'></script>
+    <script src='pigeon-chart/js/pigeon-chart-test.js'></script>
+</body>
+</html>
