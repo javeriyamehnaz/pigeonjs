@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="pigeonjs" data-ng-cloak>
+<head>
+    <title>Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="pigeon-table/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="pigeon-table/css/pigeon-table.css" rel="stylesheet" />
+    <style>
+        .main-title {
+            margin: 20px 20px 40px 20px;
+        }
+        form.query-form .row {
+            margin: 0 0 10px;
+        }
+        form.query-form label {
+            text-align: right;
+            display: block;
+        }
+        form.query-form p {
+            font-size: 13px;
+        }
+        .chart-div {
+            margin-top: 20px;
+            padding: 20px 10px;
+            border: 1px solid #ccc;
+        }
+        .table-div {
+            display: block;
+            margin-top: 20px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            /*background-color: lightblue;*/
+            border: 1px solid #ccc;
+            float: left;
+            width: 100%;
+        }
+        .table-div .table {
+            background-color: #eeeeee;
+        }
+    </style>
+</head>  
+<body ng-controller="MainCtrl">
+    
+    <div id="axis">
+	</div>
+
+	<h2 class="main-title">PigeonJS - DataTable &amp; Chart Generator</h2>
+    <form class="query-form">
+        <!-- query example: SELECT title, COUNT(title) FROM `titles` GROUP BY title -->
+        <div class="row">
+            <div class="col-md-2"><label>SQL Query:</label></div>
+            <div class="col-md-4"><textarea class="form-control" ng-model="query" required></textarea></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4"><p>Example: SELECT productLine, COUNT(productLine) FROM `products` GROUP BY productLine</p></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><label>Display</label></div>
+            <div class="col-md-4">
+                    <select class="form-control" ng-model="display" ng-init="display='table'">
+                        <option value="table">Table</option>
+                        <option value="chart">Chart</option>
+                        <option value="both">Both Table and Chart</option>
+                    </select>
+            </div>
+        </div>
+        <div ng-show="display=='chart' || display=='both'">
+            <div class="row"></div>
+            <div class="row">
+                <div class="col-md-2"><label>Chart type:</label></div>
+                <div class="col-md-4">
+                    <select class="form-control" ng-model="type" ng-init="type='bar'">
+                        <option value="bar">Bar</option>
+                        <option value="pie">Pie</option>
+                        <option value="column">Column</option>
+                        <option value="line">Line</option>
+                        <option value="area">Area</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"><label>Title:</label></div>
+                <div class="col-md-4"><input class="form-control" type="text" ng-model="title" /></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"><label>Sub Title:</label></div>
+                <div class="col-md-4"><input class="form-control" type="text" ng-model="subtitle" /></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"><label>X Axis Title:</label></div>
+                <div class="col-md-4"><input class="form-control" type="text" ng-model="axisyTitle" /></div>
+            </div>
+            <div class="row" ng-if="type !== 'pie'">
+                <div class="col-md-2"><label>Y Axis Title:</label></div>
+                <div class="col-md-4"><input class="form-control" type="text" ng-model="axisxTitle" /></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"><label>Show Data Label:</label></div>
+                <div class="col-md-4">
+                    <select ng-model="showDataLabel" ng-init="showDataLabel=false" class="form-control">
+                        <option ng-value="true">true</option>
+                        <option ng-value="false">false</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"><label>Show Legend:</label></div>
+                <div class="col-md-4"><select ng-model="showLegend" ng-init="showLegend = 'right'" class="form-control">						
+                        <option value="false">false</option>
+                        <option value="right">right</option>
+                        <option value="left">left</option>
+                        <option value="top">top</option>
+                        <option value="bottom">bottom</option>
+                    </select>
+                </div>
+            </div>     
+        </div>        
+        <div class="row"></div> 
+        <div class="row">
+            <div class="col-md-2"></div>            
+            <div class="col-md-4"><button class="btn btn-primary" ng-disabled="!query" ng-click="displayInit();">Submit</button></div>
+        </div>     
+    </form>
+
+    <div ng-show="display=='chart' || display=='both'">
+        <pigeon-chart query="query"
+            title="title"
+            subtitle="subtitle"
+            type="type"
+            axisy-title="axisyTitle"
+            axisx-title="axisxTitle"
+            show-legend="showLegend"
+            show-data-label="true">Placeholder for generic chart</pigeon-chart>
+    </div>
+
+    <div ng-show="display=='table' || display=='both'">
+        <pigeon-table query="query" editable="false" control="true"></pigeon-table>
+    </div>
+
+    <script src="pigeon-table/js/jquery.min.js"></script>
+    <script src="pigeon-table/js/bootstrap.min.js"></script>
+    <script src='pigeon-chart/js/angular.min.1.6.4.js'></script>
+    <script src='pigeon-table/js/ui-bootstrap-tpls-2.5.0.min.js'></script>
+	<script src='pigeon-chart/js/underscore-min.js'></script>
+	<script src='pigeon-chart/js/highcharts.js'></script>
+	<script src='pigeon-chart/js/exporting.js'></script>
+	<script src='pigeon-chart/js/series-label.js'></script>
+	<script src='pigeon-chart/js/grouped-categories.js'></script>
+    <script src='pigeon-chart/js/pigeon-chart-test.js'></script>
+    <script src='pigeon-table/js/pigeon-table-test.js'></script>
+</body>
+</html>

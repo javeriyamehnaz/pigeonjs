@@ -2,18 +2,41 @@
 /*jslint vars: true*/
 /*jslint plusplus: true*/
 
-var app = angular.module("pigeon-chart", []);
+var app = angular.module("pigeonjs",['ui.bootstrap']);
 
 app.controller('MainCtrl', function($scope, $compile) {
+
+    $scope.chartForm = false; 
+    $scope.chartContent = false;
+    $scope.tableContent = false;
+
+    $scope.displayInit = function() {
+        if($scope.display === 'chart') {
+            $scope.chartInit();
+        }
+        else if($scope.display === 'both') {
+            $scope.chartInit();
+            $scope.tableInit();
+        }
+        else {
+            $scope.tableInit();
+        }
+    }
+    
     // $scope.query = '';
     // $scope.type = 'bar';
-    $scope.callInit = function() {
+    // $scope.callInit = function() {
         // var elem = angular.element(document.querySelectorAll('pigeon-chart'))[0];
         // var content = $compile(elem)($scope);
         // console.log(content)
-        // $scope.$digest();                
-        $scope.init();
-    }
+        // $scope.$digest();
+    //     if($scope.chartForm) {
+    //         $scope.chartInit();
+    //     }
+    //     else {
+    //         $scope.tableInit();
+    //     }
+    // }
     // $scope.$digest();
     // angular.element(document).find('body').append(content);
 });
@@ -56,8 +79,7 @@ app.controller("pigeonChart", function ($scope, $http) {
 
     $scope.chartId = 'chart_' + $scope.$id;    
 	
-    $scope.init = function () {
-        console.log($scope);
+    $scope.chartInit = function () {     
         if ($scope.query.includes("SELECT")) {
             $scope.error = false;
             $http.post("pigeon-core/get-data.php", {
@@ -150,7 +172,7 @@ app.controller("pigeonChart", function ($scope, $http) {
         }
     };
 
-    $scope.$parent.init = $scope.init;
+    $scope.$parent.chartInit = $scope.chartInit;
 
     $scope.transform_column_as_category = function (source, query) {
 		var order = $scope.getGroupByArr(query);
