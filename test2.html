@@ -65,10 +65,10 @@
                 <label><span>Sub Title:</span> <input type="text" ng-model="subtitle" /></label>
             </div>
             <div>
-                <label><span>X Axis Title:</span> <input type="text" ng-model="axisyTitle" /></label>
+                <label><span>X Axis Title:</span> <input type="text" ng-model="axisxTitle" /></label>
             </div>
             <div ng-if="type !== 'pie'">
-                <label><span>Y Axis Title:</span> <input type="text" ng-model="axisxTitle" /></label>
+                <label><span>Y Axis Title:</span> <input type="text" ng-model="axisyTitle" /></label>
             </div>
 			<div>
                 <label>
@@ -76,7 +76,7 @@
 					<select ng-model="showDataLabel" ng-init="showDataLabel=false">
 						<option ng-value="true">true</option>
 						<option ng-value="false">false</option>
-					</select>
+                    </select>
 				</label>
             </div>
             <div>
@@ -104,7 +104,7 @@
               axisy-title="axisyTitle"
               axisx-title="axisxTitle"
 			  show-legend="showLegend"
-			  show-data-label="true">Placeholder for generic chart</pigeon-chart>
+			  show-data-label="showDataLabel">Placeholder for generic chart</pigeon-chart>
 
     <script src='pigeon-chart/js/angular.min.1.6.4.js'></script>
 	<script src='pigeon-chart/js/underscore-min.js'></script>
