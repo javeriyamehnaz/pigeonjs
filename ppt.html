@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="pigeon-chart" data-ng-cloak>
+<head>
+    <title>Example</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<style>
+		pre {
+			white-space: pre-line;
+			padding: 10px;
+			margin: 0;
+		}
+		.row {
+			display: table-row;
+		}
+		.col1, .col2, .col3 {
+			display: table-cell;
+		}
+		.col1 {
+			width: 20%;
+			border: 1px solid;
+			vertical-align: top;
+		}
+		.col1 p, .col2 p, .col3 p, .col2 code {
+			font-family: monospace;
+			vertical-align: top;
+			padding: 13px 10px;
+			font-size: 20px;
+		}
+		.heading p {
+			font-weight: bold;
+			font-size: 20px;
+			text-align: center;
+		}
+		.col2 {
+			width: 30%;
+			vertical-align: top;
+			border: 1px solid;
+		}
+		.col3 {
+			width: 50%;
+			border: 1px solid;
+		}
+	</style>
+</head>  
+<body>
+    <div id="axis">
+	</div>
+    <div class="table">
+		<div class="row heading">
+			<div class="col1">
+				<p>SQL Query pattern</p>
+			</div>
+			<div class="col2">
+				<p>pigeon-chart syntax (Sample Code)</p>
+			</div>
+			<div class="col3">
+				<p>Rendered Output (Charts)</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col1">
+				<p>
+					SELECT [x-axis], [y-axis]
+					FROM [table]
+				</p>
+			</div>
+			<div class="col2">
+				<pre><code>
+					&lt;pigeon-chart 
+						query=&quot;SELECT customerNumber, amount FROM `payments` 
+						WHERE customerNumber=103&quot;&gt;
+					&lt;/pigeon-chart&gt;
+				</code></pre>
+			</div>
+			<div class="col3">
+				<pigeon-chart query="SELECT customerNumber, amount FROM `payments` WHERE customerNumber=103"></pigeon-chart>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col1">
+				<p>
+					SELECT [x-axis], [y-axis-series1],
+					[y-axis-series2]...
+					FROM [table]
+				</p>
+			</div>
+			<div class="col2">
+				<pre><code>
+					&lt;pigeon-chart 
+						query=&quot;SELECT productName, buyPrice, MSRP FROM `products` 
+						WHERE productLine='Motorcycles'&quot;
+						type=&quot;area&quot;
+						title=&quot;Motorcycles&quot;
+						subtitle=&quot;buyPrice v/s MSRP&quot;
+						axis-x-title=&quot;Motorcycles&quot;
+						axis-y-title=&quot;price $&quot;
+						show-legend=&quot;top&quot;&gt;
+					&lt;/pigeon-chart&gt;
+				</code></pre>
+			</div>
+			<div class="col3">
+				<pigeon-chart 
+					query="SELECT productName, buyPrice, MSRP FROM `products` WHERE productLine='Motorcycles'"
+					type="area"
+					title="Motorcycles"
+					subtitle="buyPrice v/s MSRP"
+					axis-x-title="Motorcycles"
+					axis-y-title="price $"
+					show-legend="top">
+				</pigeon-chart>
+			</div>
+		</div>
+
+		<div  class="row">
+			<div class="col1">
+				<p>
+					SELECT [x-axis], AGG_FUNC([y-axis])
+					FROM [table]
+				</p>
+			</div>
+			<div class="col2">
+				<pre><code>
+					&lt;pigeon-chart 
+						query=&quot;SELECT customerNumber, COUNT(orderNumber) FROM `orders`  
+						WHERE customerNumber&lt;150 GROUP BY customerNumber&quot;
+						type=&quot;column&quot;
+						title=&quot;Orders&quot;
+						subtitle=&quot;Orders per customer number&quot;
+						axis-x-title=&quot;customer number&quot;
+						axis-y-title=&quot;order count&quot;
+						show-data-label=true
+						show-legend=&quot;bottom&quot;&gt;
+					&lt;/pigeon-chart&gt;
+				</code></pre>
+			</div>
+			<div class="col3">
+				<pigeon-chart 
+					query="SELECT customerNumber, COUNT(orderNumber) FROM `orders`  
+					WHERE customerNumber<150 GROUP BY customerNumber"
+					type="column"
+					title="Orders"
+					subtitle="Orders per customer number"
+					axis-x-title="customer number"
+					axis-y-title="order count"
+					show-data-label=true
+					show-legend="bottom">
+				</pigeon-chart>
+			</div>
+		</div>
+
+		<div  class="row">
+			<div class="col1">
+				<p>
+					SELECT [series], value
+					FROM [table]
+				</p>
+			</div>
+			<div class="col2">
+				<pre><code>
+					&lt;pigeon-chart 
+						query=&quot;SELECT productLine, COUNT(productLine) FROM `products` GROUP BY productLine&quot;
+						type=&quot;pie&quot;
+						title=&quot;Products&quot;
+						subtitle=&quot;Number of types of products&quot;
+						show-data-label=true
+						show-legend=&quot;left&quot;&gt;
+					&lt;/pigeon-chart&gt;
+				</code></pre>
+			</div>
+			<div class="col3">
+				<pigeon-chart 
+					query="SELECT productLine, COUNT(productLine) FROM `products` GROUP BY productLine"
+					type="pie"
+					title="Products"
+					subtitle="Number of types of products"
+					show-data-label=true
+					show-legend="left">
+				</pigeon-chart>
+			</div>
+		</div>
+
+
+    <script src='pigeon-chart/js/angular.min.1.6.4.js'></script>
+	<script src='pigeon-chart/js/underscore-min.js'></script>
+	<script src='pigeon-chart/js/highcharts.js'></script>
+	<script src='pigeon-chart/js/exporting.js'></script>
+	<script src='pigeon-chart/js/series-label.js'></script>
+	<script src='pigeon-chart/js/grouped-categories.js'></script>
+    <script src='pigeon-chart/js/pigeon-chart.js'></script>
+</body>
+</html>
