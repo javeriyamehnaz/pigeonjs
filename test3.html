@@ -51,9 +51,23 @@
             <div class="col-md-2"><label>SQL Query:</label></div>
             <div class="col-md-4"><textarea class="form-control" ng-model="query" required></textarea></div>
         </div>
+
         <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-4"><p>Example: SELECT productLine, COUNT(productLine) FROM `products` GROUP BY productLine</p></div>
+            <div class="col-md-2"><label>Query Examples:</label></div>
+            <div class="col-md-4">
+                <select class="form-control" ng-model="egQuery" ng-change="query = egQuery">
+                    <option value="SELECT customerNumber, amount FROM `payments` 
+                    WHERE customerNumber=103">SELECT customerNumber, amount FROM `payments` 
+                    WHERE customerNumber=103</option>
+                    <option value="SELECT productName, buyPrice, MSRP FROM `products` 
+                    WHERE productLine='Motorcycles'">SELECT productName, buyPrice, MSRP FROM `products` 
+                    WHERE productLine='Motorcycles'</option>
+                    <option value="SELECT customerNumber, COUNT(orderNumber) FROM `orders` 
+                    WHERE customerNumber<150 GROUP BY customerNumber">SELECT customerNumber, COUNT(orderNumber) FROM `orders` 
+                        WHERE customerNumber&lt;150 GROUP BY customerNumber</option>
+                    <option value="SELECT productLine, COUNT(productLine) FROM `products` GROUP BY productLine">SELECT productLine, COUNT(productLine) FROM `products` GROUP BY productLine</option>
+                </select>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-2"><label>Display</label></div>
